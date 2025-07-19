@@ -1,4 +1,4 @@
-# Sistema-de-gest-o-de-estacionamento
+# Sistema-de-gestao-de-estacionamento
 Este projeto propõe o desenvolvimento de um sistema de estacionamento inteligente 
 utilizando a linguagem Java com aplicação dos diversos conceitos de OO. Tal sistema 
 apresentará com funções de controle de cancela automatizada e um modulo de agendamento 
