@@ -23,7 +23,7 @@ Relatórios de ocupação e receita
 Gestão de tarifas
 
 
-Equipe
+# Equipe
 
 - Jamerson Lucas Tenório Valentim
 - Paulo Eduardo Vieira Souza
