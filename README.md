@@ -4,20 +4,20 @@ Sistema desktop para automatizar o controle de entrada, saída e pagamentos em e
 
 # Funcionalidades
 
-Clientes
+# Clientes
 
-Cadastro de usuário e veículos
-Reserva de vagas em tempo real
-Sistema de pagamento
-Histórico de uso
+- Cadastro de usuário e veículos
+- Reserva de vagas em tempo real
+- Sistema de pagamento
+- Histórico de uso
 
-Funcionários
+# Funcionários
 
-Controle de entrada e saída
-Validação de tickets
-Monitoramento de vagas
+- Controle de entrada e saída
+- Validação de tickets
+- Monitoramento de vagas
 
-Administradores
+# Administradores
 
 Relatórios de ocupação e receita
 Gestão de tarifas
