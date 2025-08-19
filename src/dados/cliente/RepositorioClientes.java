@@ -4,11 +4,11 @@ import negocio.entidade.Cliente;
 
 import java.util.ArrayList;
 
-public class RepositorioClientesArrayList implements IRepositorioClientes {
+public class RepositorioClientes implements IRepositorioClientes {
 
     private ArrayList<Cliente> array;
 
-    public RepositorioClientesArrayList() {
+    public RepositorioClientes() {
         array = new ArrayList<Cliente>();
     }
 
@@ -72,7 +72,7 @@ public class RepositorioClientesArrayList implements IRepositorioClientes {
     public boolean existePlaca(String placa) {
         boolean resultado = false;
         for (Cliente cliente : array) {
-            if (cliente.getVeiculo().getPlaca().equals(cpf)) {
+            if (cliente.getVeiculo().getPlaca().equals(placa)) {
                 resultado = true;
                 break;
             }
