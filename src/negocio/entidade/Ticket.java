@@ -1,21 +1,19 @@
-package model;
+package negocio.entidade;
 import java.time.LocalDateTime;
 
 public class Ticket{
     private LocalDateTime horarioEntrada; //Horário de criação do ticket
     private LocalDateTime horarioSaida; //Horário em que o cliente começa o processo de saída
-    private LocalDateTime tempoContratado; //Tempo que o cliente solicitou para permanencia
     private boolean ativo;
     private double valor;
     private Vaga vaga;
-    private Cliente cliente;
+    private Veiculo veiculo;
 
     //Construtor de Ticket
-    public Ticket(Cliente cliente, Vaga vaga, LocalDateTime tempoContratado){
-        this.cliente = cliente;
+    public Ticket(Veiculo veiculo, Vaga vaga){
+        this.veiculo = veiculo;
         this.vaga = vaga;
         this.horarioEntrada = LocalDateTime.now();
-        this.tempoContratado = tempoContratado
         this.ativo = true;
     }
 
@@ -24,8 +22,8 @@ public class Ticket{
         return vaga;
     }
 
-    public Cliente getCliente(){
-        return cliente;
+    public Cliente getVeiculo(){
+        return veiculo;
     }
 
     public boolean isAtivo() {

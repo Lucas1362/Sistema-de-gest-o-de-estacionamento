@@ -1,4 +1,4 @@
-package model;
+package negocio.entidade;
 
 public class Usuario{
     private String nome;

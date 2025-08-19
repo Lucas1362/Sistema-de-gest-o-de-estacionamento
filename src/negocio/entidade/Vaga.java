@@ -1,4 +1,4 @@
-package src.model;
+package negocio.entidade;
 
 public class Vaga{
     private int numeroID;
@@ -29,6 +29,8 @@ public class Vaga{
     public void setOcupada(boolean ocupada){
         this.ocupada = ocupada;
     }
+
+    public void setNumeroID(int numeroID){this.numeroID = numeroID;}
 
 
 }

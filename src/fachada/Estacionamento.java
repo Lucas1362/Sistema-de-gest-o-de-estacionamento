@@ -1,4 +1,4 @@
-package src.model;
+package negocio.entidade;
 
 import src.model.Vaga;
 import src.model.Veiculo;
