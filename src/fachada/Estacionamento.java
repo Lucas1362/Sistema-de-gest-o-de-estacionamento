@@ -102,3 +102,9 @@ class Ticket {
 
 
 }
+
+class EstacionamentoException extends Exception{
+    public EstacionamentoException(String message){
+        super(message);
+    }
+}
