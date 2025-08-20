@@ -1,16 +1,11 @@
-package src.model;
+package negocio.entidade;
 
 public class Veiculo{
     private String placa;
-    private String modelo;
     private Cliente dono;
 
-
-
-
-    public Veiculo(String placa, String modelo, Cliente dono){
+    public Veiculo(String placa, Cliente dono){
         this.placa = placa;
-        this.modelo = modelo;
         this.dono = dono;
     }
 
@@ -20,10 +15,6 @@ public class Veiculo{
     public String getPlaca() {
         return placa;
 
-    }
-
-    public String getModelo() {
-        return modelo;
     }
 
     public String getDono(){
@@ -37,15 +28,9 @@ public class Veiculo{
 
     }
 
-    public void setModelo(String modelo){
-        this.modelo = modelo;
-
-    }
     public void setDono(Cliente dono){
         this.dono = dono;
     }
 
 
 }
-
-
