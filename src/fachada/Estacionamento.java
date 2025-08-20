@@ -10,13 +10,18 @@ import java.util.list;
 public class Estacionamento {
     private List<Vaga> vagas;
     private List<Veiculo> veiculos;
+    private List<Ticket> ticketsAtivos;
+    private List<Ticket> ticketsEncerrados;
+    private double valorhora = 5.0;
 
 
 //construtores
 
-    public Estacionamento(){
+    public Estacionamento(int totalVagas){
         this.vagas = new ArrayList<>();
         this.veiculos = new ArrayList<>();
+        this.ticketsAtivos = new ArrayList<>();
+        this.ticketsEncerrados = new ArrayList<>();
 
         // quantidade definida de vagas
         for (int i = 1; i <= 10; i++){
@@ -24,12 +29,21 @@ public class Estacionamento {
         }
     }
 
-    public boolean reservarVaga(Veiculo veiculo, LocalDateTime horario) {
-        for (Vaga vaga : vagas){
-            if(!vaga.isOcupada()){
-                vaga.setOcupada(true);
-                veiculos.add(veiculo);
-                return true;// em caso de reserva com sucesso
+    // Registro de entrada
+    public Ticket registrarEntrada(String placa) throws  EstacionamentoException {
+        Vaga vagaDisponivel = vagas.stream()
+                .filter(v -> v.estaLivre())
+                .findFirst()
+                .orElseThrow(() -> new EstacionamentoException("Desculpe, não há vagas disponiveis"))
+
+        Veiculo veiculo = new Veiculo(placa);
+        vagaDisponivel.ocupar(veiculo);
+
+        ticket novoTicket = new Ticket(veiculo, vagaDisponivel, LocalDateTime.now());
+        ticketsAtivos.add(novoTicket);
+
+        return novoTicket;
+
             }
         }
         return false; // vagas indisponiveis
