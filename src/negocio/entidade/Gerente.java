@@ -2,8 +2,8 @@ package negocio.entidade;
 
 public class Gerente extends Usuario{
     //Construtor
-    public Gerente(String nome, String cpf){
-        super(nome, cpf);
+    public Gerente(String cpf){
+        super(cpf);
     }
 
     public void gerarRelatorio(int mes){

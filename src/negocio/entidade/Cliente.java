@@ -6,7 +6,7 @@ public class Cliente extends Usuario{
     private String cpf; //cpf servirá para fazer o login
     // Construtor de cliente
     public Cliente(String cpf, Boolean preferencial){
-        super(nome, cpf);
+        super(cpf);
         this.preferencial = preferencial;
     }
 
@@ -21,15 +21,11 @@ public class Cliente extends Usuario{
         return preferencial;
     }
 
-    public String getCpf() { return cpf;}
-
     //setters
 
     public void setPreferencial(boolean preferencial) {
         this.preferencial = preferencial;
     }
-
-    public void setCpf(String cpf) { this.cpf = cpf;}
 
     public void setVeiculo(Veiculo carro){
         this.veiculo = carro;
