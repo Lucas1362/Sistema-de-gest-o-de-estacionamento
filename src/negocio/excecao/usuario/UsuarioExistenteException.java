@@ -1,9 +1,9 @@
-package negocio.excecao.cliente;
+package negocio.excecao.usuario;
 
 @SuppressWarnings("serial")
-public class ClienteExistenteException extends ClienteException {
+public class UsuarioExistenteException extends UsuarioException {
 
-    public ClienteExistenteException() {
-        super("Esse cliente já existe, não é possível adicioná-lo novamente.");
+    public UsuarioExistenteException() {
+        super("Esse Usuário já existe, não é possível adicioná-lo novamente.");
     }
 }

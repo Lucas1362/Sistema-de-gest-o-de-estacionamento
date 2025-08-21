@@ -25,9 +25,18 @@ public class RepositorioVagas implements IRepositorioVagas {
     }
 
     @Override
+    public boolean existeID(int id) {
+        for (Vaga vaga : array) {
+            if(vaga.getNumeroID().equals(id)){
+                return true;
+        }
+        return false;
+    }
+
+    @Override
     public ArrayList consultarAtivas(){
         ArrayList<Vaga> arrayOcupadas;
-        for (Ticket ticket : array) {
+        for (Vaga vaga : array) {
             array.add(vaga);
         }
         return arrayOcupadas;
@@ -35,11 +44,10 @@ public class RepositorioVagas implements IRepositorioVagas {
 
     @Override
     public void listar() {
-        for (Ticket ticket : array) {
+        for (Vaga vaga : array) {
             System.out.println(vaga);
         }
     }
-
         return resultado;
     }
 

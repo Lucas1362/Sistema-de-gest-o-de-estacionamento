@@ -1,14 +1,15 @@
 package negocio.entidade;
 
 public class Vaga{
-    private int numeroID;
+    private String numeroID;
     private boolean ocupada;
+    private boolean PCD;
 
 
 
     //construtor da class
 
-    public Vaga(int numeroID){
+    public Vaga(String numeroID){
         this.numeroID = numeroID;
         this.ocupada = false;
 
@@ -24,13 +25,19 @@ public class Vaga{
         return ocupada;
     }
 
+    public boolean isPCD(){
+        return PCD;
+    }
+
     //setter
 
     public void setOcupada(boolean ocupada){
         this.ocupada = ocupada;
     }
 
-    public void setNumeroID(int numeroID){this.numeroID = numeroID;}
+    public void setNumeroID(String numeroID){this.numeroID = numeroID;}
+
+    public void setPCD(boolean PCD){this.PCD = PCD;}
 
 
 }

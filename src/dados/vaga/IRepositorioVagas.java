@@ -10,6 +10,8 @@ public interface IRepositorioVaga{
 
     boolean isPCD(Vaga vaga);
 
+    boolean existeID(String id);
+
     ArrayList consultarAtivas();
 
     void listar();

@@ -1,10 +1,10 @@
-package negocio.excecao.cliente;
+package negocio.excecao.usuario;
 
 @SuppressWarnings("serial")
-public class ClienteNaoExisteException extends ClienteException {
+public class UsuarioNaoExisteException extends UsuarioException {
 
-    public ClienteNaoExisteException() {
-        super("Cliente não existe.");
+    public UsuarioNaoExisteException() {
+        super("Usuário não existe.");
     }
 
 }
