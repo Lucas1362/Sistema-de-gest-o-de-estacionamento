@@ -36,10 +36,8 @@ public class RepositorioVagas implements IRepositorioVagas {
     }
 
     @Override
-    public void listar() {
-        for (Vaga vaga : array) {
-            System.out.println(vaga);
-        }
+    public ArrayList listar() {
+        return array;
     }
 
     @Override
@@ -55,6 +53,16 @@ public class RepositorioVagas implements IRepositorioVagas {
             }
         }
         return false;
+    }
+
+    @Override
+    public Vaga consultar(String id) {
+        for (Vaga vaga : array) {
+            if (vaga.getNumeroID().equals(id)) {
+                return vaga;
+            }
+        }
+        return null;
     }
 
 }

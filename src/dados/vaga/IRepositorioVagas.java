@@ -14,8 +14,10 @@ public interface IRepositorioVagas{
 
     boolean existeID(String id);
 
+    Vaga consultar(String id);
+
     ArrayList consultarAtivas();
 
-    void listar();
+    ArrayList listar();
 
 }
