@@ -22,7 +22,7 @@ public class Ticket{
         return vaga;
     }
 
-    public Cliente getVeiculo(){
+    public Veiculo getVeiculo(){
         return veiculo;
     }
 

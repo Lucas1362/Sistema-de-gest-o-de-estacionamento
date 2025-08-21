@@ -30,7 +30,7 @@ public class RepositorioTickets implements IRepositorioTickets {
         Ticket ticketProcurado = null;
         for (Ticket ticket : array) {
             if (ticket.getVeiculo().getPlaca().equals(placa)) {
-                ticketProcurado = cliente;
+                ticketProcurado = ticket;
                 break;
             }
         }
@@ -54,6 +54,17 @@ public class RepositorioTickets implements IRepositorioTickets {
             }
         }
         return resultado;
+    }
+
+    @Override
+    public ArrayList consultarAtivos(){
+        ArrayList<Ticket> ticketsAtivos = null;
+        for (Ticket ticket : array) {
+            if (ticket.isAtivo()) {
+                ticketsAtivos.add(ticket);
+            }
+        }
+        return ticketsAtivos;
     }
 
 }

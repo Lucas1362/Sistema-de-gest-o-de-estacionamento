@@ -2,7 +2,7 @@ package dados.gerente;
 
 import negocio.entidade.Gerente;
 
-public interface IRepositorioGerente{
+public interface IRepositorioGerentes {
 
     void adicionar(Gerente gerente);
 

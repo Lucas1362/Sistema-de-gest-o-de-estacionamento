@@ -25,19 +25,12 @@ public class RepositorioVagas implements IRepositorioVagas {
     }
 
     @Override
-    public boolean existeID(int id) {
-        for (Vaga vaga : array) {
-            if(vaga.getNumeroID().equals(id)){
-                return true;
-        }
-        return false;
-    }
-
-    @Override
     public ArrayList consultarAtivas(){
-        ArrayList<Vaga> arrayOcupadas;
+        ArrayList<Vaga> arrayOcupadas = null;
         for (Vaga vaga : array) {
-            array.add(vaga);
+            if(vaga.isOcupada()){
+                arrayOcupadas.add(vaga);
+            }
         }
         return arrayOcupadas;
     }
@@ -48,7 +41,20 @@ public class RepositorioVagas implements IRepositorioVagas {
             System.out.println(vaga);
         }
     }
-        return resultado;
+
+    @Override
+    public boolean isPCD(Vaga vaga) {
+        return vaga.isPCD();
+    }
+
+    @Override
+    public boolean existeID(String id) {
+        for (Vaga vaga : array) {
+            if(vaga.getNumeroID().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

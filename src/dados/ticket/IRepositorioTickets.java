@@ -2,7 +2,9 @@ package dados.ticket;
 
 import negocio.entidade.Ticket;
 
-public interface IRepositorioTicket{
+import java.util.ArrayList;
+
+public interface IRepositorioTickets {
 
     void adicionar(Ticket ticket);
 

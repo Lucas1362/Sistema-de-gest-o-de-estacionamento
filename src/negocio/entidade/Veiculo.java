@@ -17,7 +17,7 @@ public class Veiculo{
 
     }
 
-    public String getDono(){
+    public Cliente getDono(){
         return dono;
 
     }

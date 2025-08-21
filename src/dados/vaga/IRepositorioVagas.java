@@ -2,7 +2,9 @@ package dados.vaga;
 
 import negocio.entidade.Vaga;
 
-public interface IRepositorioVaga{
+import java.util.ArrayList;
+
+public interface IRepositorioVagas{
 
     void adicionar(Vaga vaga);
 

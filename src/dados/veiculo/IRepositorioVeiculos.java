@@ -2,15 +2,15 @@ package dados.veiculo;
 
 import negocio.entidade.Veiculo;
 
-public interface IRepositorioVeiculo{
+import negocio.entidade.Cliente;
+
+public interface IRepositorioVeiculos{
 
     void adicionar(Veiculo veiculo);
 
     void remover(Veiculo veiculo);
 
     Veiculo consultarPlaca(String placa);
-
-    Veiculo consultarDono(Cliente dono);
 
     void listar();
 

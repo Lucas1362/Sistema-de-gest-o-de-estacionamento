@@ -1,10 +1,11 @@
 package dados.veiculo;
 
+import negocio.entidade.Cliente;
 import negocio.entidade.Veiculo;
 
 import java.util.ArrayList;
 
-public class RepositorioVeiculo implements IRepositorioVeiculo {
+public class RepositorioVeiculos implements IRepositorioVeiculos {
 
     private ArrayList<Veiculo> array;
 

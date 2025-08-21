@@ -17,7 +17,7 @@ public class Vaga{
 
     //getters
 
-    public int getNumeroID(){
+    public String getNumeroID(){
         return numeroID;
     }
 

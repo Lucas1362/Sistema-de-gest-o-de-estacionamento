@@ -8,7 +8,7 @@ public class RepositorioGerentes implements IRepositorioGerentes {
 
     private ArrayList<Gerente> array;
 
-    public RepositorioGerente() {
+    public RepositorioGerentes() {
         array = new ArrayList<Gerente>();
     }
 
@@ -26,7 +26,7 @@ public class RepositorioGerentes implements IRepositorioGerentes {
     }
 
     @Override
-    public Cliente consultarCPF(String cpf) {
+    public Gerente consultarCPF(String cpf) {
         Gerente gerenteProcurado = null;
         for (Gerente gerente : array) {
             if (gerente.getCpf().equals(cpf)) {

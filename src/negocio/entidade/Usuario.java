@@ -1,10 +1,9 @@
 package negocio.entidade;
 
 public class Usuario{
-    private String nome;
     private String cpf;
 
-    public Cliente(String nome, String cpf){
+    public Usuario(String cpf){
         this.cpf = cpf;
     }
 

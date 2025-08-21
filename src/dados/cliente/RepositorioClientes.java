@@ -38,7 +38,7 @@ public class RepositorioClientes implements IRepositorioClientes {
     }
 
     @Override
-    public Cliente consultar(String placa) {
+    public Cliente consultarPlaca(String placa) {
         Cliente clienteProcurado = null;
         for (Cliente cliente : array) {
             if (cliente.getVeiculo().getPlaca().equals(placa)) {
