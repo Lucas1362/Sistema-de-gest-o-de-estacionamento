@@ -1,79 +1,130 @@
-package negocio.entidade;
-
-import src.model.Vaga;
-import src.model.Veiculo;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.list;
+import java.util.List;
 
 
 public class Estacionamento {
     private List<Vaga> vagas;
-    private List<Veiculo> veiculos;
-    private List<Ticket> ticketsAtivos;
     private List<Ticket> ticketsEncerrados;
-    private double valorhora = 5.0;
+    private double valorHora;
+    private double valorDiaria;
 
-
-//construtores
-
-    public Estacionamento(int totalVagas){
+    public Estacionamento(int totalVagas, double valorHora, double valorDiaria) {
         this.vagas = new ArrayList<>();
-        this.veiculos = new ArrayList<>();
-        this.ticketsAtivos = new ArrayList<>();
         this.ticketsEncerrados = new ArrayList<>();
+        this.valorHora = valorHora;
+        this.valorDiaria = valorDiaria;
 
-        // quantidade definida de vagas
-        for (int i = 1; i <= 10; i++){
-            vagas.add(new Vaga(i));
+        // Inicializa as vagas
+        for (int i = 1; i <= totalVagas; i++) {
+            vagas.add(new Vaga("A-" + String.format("%02d", i)));
         }
     }
 
-    // Registro de entrada
-    public Ticket registrarEntrada(String placa) throws  EstacionamentoException {
-        Vaga vagaDisponivel = vagas.stream()
-                .filter(v -> v.estaLivre())
-                .findFirst()
-                .orElseThrow(() -> new EstacionamentoException("Desculpe, não há vagas disponiveis"))
-
-        Veiculo veiculo = new Veiculo(placa);
-        vagaDisponivel.ocupar(veiculo);
-
-        ticket novoTicket = new Ticket(veiculo, vagaDisponivel, LocalDateTime.now());
-        ticketsAtivos.add(novoTicket);
-
-        return novoTicket;
-
-            }
+    // Método para registrar a entrada de um veículo
+    public Ticket registrarEntrada(Veiculo veiculo) throws EstacionamentoException {
+        Vaga vagaLivre = encontrarVagaLivre();
+        if (vagaLivre == null) {
+            throw new EstacionamentoException("Não há vagas disponíveis!");
         }
-        return false; // vagas indisponiveis
 
-
-    }
-    //registro de entrada
-    public void registrarEntrada(Veiculo veiculo){
-
+        Ticket ticket = new Ticket(veiculo, vagaLivre, LocalDateTime.now());
+        vagaLivre.ocupar(veiculo);
+        return ticket;
     }
 
-    // obter informações sobre as vagas disponiveis
-    public List<Vaga> getVagasDisponiveis(){
-        List<Vaga> vagasDisponiveis = new ArrayList<>();
-        for(Vaga vaga : vagas){
-            if (!vaga.isOcupada()){
-                vagasDisponiveis.add(vaga);
-            }
+    // Método para registrar a saída de um veículo
+    public double registrarSaida(Ticket ticket) throws EstacionamentoException {
+        if (ticket == null || ticket.getSaida() != null) {
+            throw new EstacionamentoException("Ticket inválido ou já finalizado!");
         }
-        return vagasDisponiveis;
+
+        ticket.setSaida(LocalDateTime.now());
+        calcularValor(ticket);
+        ticketsEncerrados.add(ticket);
+        ticket.getVaga().liberar();
+        return ticket.getValor();
     }
 
-    public void registrarEntrada(Veiculo veiculo) {
+    // Cálculo do valor estacionado
+    private void calcularValor(Ticket ticket) {
+        Duration duracao = Duration.between(ticket.getEntrada(), ticket.getSaida());
+        long horas = duracao.toHours();
+        long dias = duracao.toDays();
 
+        // Lógica de cobrança
+        if (dias > 0) {
+            ticket.setValor(dias * valorDiaria + Math.min(horas % 24 * valorHora, valorDiaria));
+        } else {
+            ticket.setValor(Math.max(horas, 1) * valorHora); // Mínimo 1 hora
+        }
     }
-    public List<Vaga> getVagasDisoniveis(LocalDateTime horario){
 
-
-
-        return null
+    // Métodos de relatório
+    public List<Vaga> getVagasLivres() {
+        return vagas.stream().filter(Vaga::estaLivre).toList();
     }
 
+    public List<Vaga> getVagasOcupadas() {
+        return vagas.stream().filter(v -> !v.estaLivre()).toList();
+    }
+
+    public double getFaturamentoDiario() {
+        return ticketsEncerrados.stream()
+                .filter(t -> t.getSaida().toLocalDate().equals(LocalDateTime.now().toLocalDate()))
+                .mapToDouble(Ticket::getValor)
+                .sum();
+    }
+
+    // Método auxiliar para encontrar uma vaga livre
+    private Vaga encontrarVagaLivre() {
+        return vagas.stream().filter(Vaga::estaLivre).findFirst().orElse(null);
+    }
+
+    // Classes auxiliares
+    class Ticket {
+        private Veiculo veiculo;
+        private Vaga vaga;
+        private LocalDateTime entrada;
+        private LocalDateTime saida;
+        private double valor;
+
+        public Ticket(Veiculo veiculo, Vaga vaga, LocalDateTime entrada) {
+            this.veiculo = veiculo;
+            this.vaga = vaga;
+            this.entrada = entrada;
+            this.saida = null; // Inicialmente, a saída é nula
+        }
+
+        public void setSaida(LocalDateTime saida) {
+            this.saida = saida;
+        }
+
+        public LocalDateTime getEntrada() {
+            return entrada;
+        }
+
+        public LocalDateTime getSaida() {
+            return saida;
+        }
+
+        public Vaga getVaga() {
+            return vaga;
+        }
+
+        public double getValor() {
+            return valor;
+        }
+
+        public void setValor(double valor) {
+            this.valor = valor;
+        }
+    }
+
+    class EstacionamentoException extends Exception {
+        public EstacionamentoException(String message) {
+            super(message);
+        }
+    }
 }

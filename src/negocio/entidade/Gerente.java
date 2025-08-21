@@ -1,21 +1,53 @@
 package negocio.entidade;
 
-public class Gerente extends Usuario{
-    //Construtor
-    public Gerente(String nome, String cpf){
+import java.time.LocalDate;
+
+public class Gerente extends Usuario {
+
+    // Construtor mantido igual
+    public Gerente(String nome, String cpf) {
         super(nome, cpf);
     }
 
-    public void gerarRelatorio(int mes){
+    /**
+     * Gera relatório mensal simplificado
+     * @param mes 1-12
+     * @return String com dados formatados
+     */
+    public String gerarRelatorio(int mes) {
+        if(mes < 1 || mes > 12) {
+            throw new IllegalArgumentException("Mês inválido");
+        }
 
+        return String.format("""
+            RELATÓRIO MENSAL - %02d/%d
+            Total de vagas: %d
+            Ocupação média: %.1f%%
+            """,
+                mes,
+                LocalDate.now().getYear(),
+                50,  // Valor exemplo
+                75.5 // Valor exemplo
+        );
     }
 
-    public void modificarCliente(Cliente cliente){
+    /**
+     * Atualiza dados do cliente
+     */
+    public void modificarCliente(Cliente c, String novoNome, boolean novoStatus) {
+        if(c == null) throw new IllegalArgumentException("Cliente não pode ser nulo");
 
+        if(novoNome != null) {
+            c.setNome(novoNome);
+        }
+        c.setPreferencial(novoStatus);
     }
 
-    public void modificarVaga(Vaga vaga){
-
+    /**
+     * Modifica status da vaga
+     */
+    public void modificarVaga(Vaga v, StatusVaga novoStatus) {
+        if(v == null) throw new IllegalArgumentException("Vaga não pode ser nula");
+        v.setStatus(novoStatus);
     }
-
 }
