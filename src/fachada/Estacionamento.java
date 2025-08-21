@@ -10,13 +10,18 @@ import java.util.list;
 public class Estacionamento {
     private List<Vaga> vagas;
     private List<Veiculo> veiculos;
+    private List<Ticket> ticketsAtivos;
+    private List<Ticket> ticketsEncerrados;
+    private double valorhora = 5.0;
 
 
 //construtores
 
-    public Estacionamento(){
+    public Estacionamento(int totalVagas){
         this.vagas = new ArrayList<>();
         this.veiculos = new ArrayList<>();
+        this.ticketsAtivos = new ArrayList<>();
+        this.ticketsEncerrados = new ArrayList<>();
 
         // quantidade definida de vagas
         for (int i = 1; i <= 10; i++){
@@ -24,42 +29,82 @@ public class Estacionamento {
         }
     }
 
-    public boolean reservarVaga(Veiculo veiculo, LocalDateTime horario) {
-        for (Vaga vaga : vagas){
-            if(!vaga.isOcupada()){
-                vaga.setOcupada(true);
-                veiculos.add(veiculo);
-                return true;// em caso de reserva com sucesso
+    // Registro de entrada
+    public Ticket registrarEntrada(String placa) throws  EstacionamentoException {
+        Vaga vagaDisponivel = vagas.stream()
+                .filter(v -> v.estaLivre())
+                .findFirst()
+                .orElseThrow(() -> new EstacionamentoException("Desculpe, não há vagas disponiveis"))
+
+        Veiculo veiculo = new Veiculo(placa);
+        vagaDisponivel.ocupar(veiculo);
+
+        ticket novoTicket = new Ticket(veiculo, vagaDisponivel, LocalDateTime.now());
+        ticketsAtivos.add(novoTicket);
+
+        return novoTicket;
+
             }
         }
-        return false; // vagas indisponiveis
+    public Ticket RegistrarSaida(String placa) throws EstacionamentoException {
+        Ticket ticket = ticketsAtivos.stream()
+            .filter(t -> t.getVeiculo().getPlaca().equals(placa))
+            .findFirst()
+            .orElseThrow(() -> new EstacionamentoException ("Este veiculo não foi encontrado"))
+
+        ticket.finalizar(LocalDateTime.now());
+        ticket.getVaga().liberar();
+        ticketsAtivos.remove(ticket);
+        ticketsEncerrados.add(ticket);
+
+        calcularValor(ticket)
+        return ticket;
 
 
     }
-    //registro de entrada
-    public void registrarEntrada(Veiculo veiculo){
 
-    }
+    //Calculo de valor
+    private void calcularValor (Ticket ticket){
+    Duration duracao = duration.betwenn(ticket.getEntrada(), ticket.getSaida());
+    long horas = duracao.toHours();
+    long dias = duracao.toDays();
 
-    // obter informações sobre as vagas disponiveis
-    public List<Vaga> getVagasDisponiveis(){
-        List<Vaga> vagasDisponiveis = new ArrayList<>();
-        for(Vaga vaga : vagas){
-            if (!vaga.isOcupada()){
-                vagasDisponiveis.add(vaga);
-            }
+    //mecanica da cobrança
+        if (dias > 0){
+            ticket.setValor(dias* valorDiaria + Math.min(horas % 24 * valorHora, valorDiaria));
+        }else {
+            ticket.setValor(Math.max(horas, 1) * valorHora); // minimo de 1 hora de estacionamento
         }
-        return vagasDisponiveis;
     }
 
-    public void registrarEntrada(Veiculo veiculo) {
+}
 
+public List<Vaga> getVagasLivres(){
+    return vagas.stream().filter(Vaga::estarLivre()).toList();
+}
+public double getFaturamentoDiario() {
+    returnticketsEncerrados.stream()
+            .filter(t -> t.getSaida().toLocalDate().equals(LocalDateTime.now().toLocalDate()))
+            .mapToDouble(Ticket::getValor)
+            .sum();
     }
-    public List<Vaga> getVagasDisoniveis(LocalDateTime horario){
+}
+
+// classe ticket(auxiliar)
+
+class Ticket {
+    private Veiculo veiculo;
+    private Vaga vaga;
+    private LocalDateTime entrada;
+    private LocalDateTime saida;
+    private double valor;
 
 
 
-        return null
+}
+
+class EstacionamentoException extends Exception{
+    public EstacionamentoException(String message){
+        super(message);
     }
-
 }
