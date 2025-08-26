@@ -51,7 +51,7 @@ public class RepositorioVagas implements IRepositorioVagas {
 
     @Override
     public ArrayList consultarAtivas(){
-        ArrayList<Vaga> arrayOcupadas = null;
+        ArrayList<Vaga> arrayOcupadas = new ArrayList<>();
         for (Vaga vaga : array) {
             if(vaga.isOcupada()){
                 arrayOcupadas.add(vaga);

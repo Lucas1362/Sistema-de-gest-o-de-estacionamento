@@ -82,7 +82,7 @@ public class RepositorioTickets implements IRepositorioTickets {
 
     @Override
     public ArrayList consultarAtivos(){
-        ArrayList<Ticket> ticketsAtivos = null;
+        ArrayList<Ticket> ticketsAtivos = new ArrayList<>();
         for (Ticket ticket : array) {
             if (ticket.isAtivo()) {
                 ticketsAtivos.add(ticket);
