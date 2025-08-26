@@ -1,6 +1,8 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Usuario{
+public class Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String cpf;
 
     public Usuario(String cpf){

@@ -1,7 +1,9 @@
 package negocio.entidade;
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class Ticket{
+public class Ticket implements Serializable{
+    private static final long serialVersionUID = 1L;
     private LocalDateTime horarioEntrada; //Horário de criação do ticket
     private LocalDateTime horarioSaida; //Horário em que o cliente começa o processo de saída
     private boolean ativo;

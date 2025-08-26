@@ -1,6 +1,8 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Vaga{
+public class Vaga implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String numeroID;
     private boolean ocupada;
     private boolean PCD;

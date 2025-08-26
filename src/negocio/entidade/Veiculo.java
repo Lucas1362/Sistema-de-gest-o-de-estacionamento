@@ -1,6 +1,8 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Veiculo{
+public class Veiculo implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String placa;
     private Cliente dono;
 

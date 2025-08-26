@@ -1,20 +1,43 @@
 package dados.ticket;
 
+import negocio.entidade.Cliente;
 import negocio.entidade.Ticket;
-
+import java.io.*;
 import java.util.ArrayList;
 
 public class RepositorioTickets implements IRepositorioTickets {
-
+    private static final String  Tickets_Data = "tickets.dat";
     private ArrayList<Ticket> array;
 
     public RepositorioTickets() {
         array = new ArrayList<Ticket>();
+        carregarDados();
     }
+
+    //Parte de Dados em arquivo
+    private void salvarDados() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(Tickets_Data))) {
+            oos.writeObject(this.array);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void carregarDados() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Tickets_Data))) {
+            this.array = (ArrayList<Ticket>) ois.readObject();
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    //fim
 
     @Override
     public void adicionar(Ticket ticket) {
         array.add(ticket);
+        salvarDados();
     }
 
     @Override
@@ -22,6 +45,7 @@ public class RepositorioTickets implements IRepositorioTickets {
         int indice = array.indexOf(ticket);
         if (indice != -1) {
             array.remove(ticket);
+            salvarDados();
         }
     }
 
@@ -66,5 +90,4 @@ public class RepositorioTickets implements IRepositorioTickets {
         }
         return ticketsAtivos;
     }
-
 }

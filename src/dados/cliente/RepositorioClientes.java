@@ -1,20 +1,41 @@
 package dados.cliente;
 
 import negocio.entidade.Cliente;
-
+import java.io.*;
 import java.util.ArrayList;
 
 public class RepositorioClientes implements IRepositorioClientes {
-
+    private static final String  Clientes_Data = "clientes.dat";
     private ArrayList<Cliente> array;
 
     public RepositorioClientes() {
         array = new ArrayList<Cliente>();
+        carregarDados();
     }
+    //Parte de Dados em arquivo
+    private void salvarDados() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(Clientes_Data))) {
+            oos.writeObject(this.array);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void carregarDados() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Clientes_Data))) {
+            this.array = (ArrayList<Cliente>) ois.readObject();
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    //fim
 
     @Override
     public void adicionar(Cliente cliente) {
         array.add(cliente);
+        salvarDados();
     }
 
     @Override
@@ -22,6 +43,7 @@ public class RepositorioClientes implements IRepositorioClientes {
         int indice = array.indexOf(cliente);
         if (indice != -1) {
             array.remove(cliente);
+            salvarDados();
         }
     }
 

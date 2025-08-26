@@ -1,9 +1,10 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Veiculo veiculo;
     private boolean preferencial;
-    private String cpf; //cpf servirá para fazer o login
     // Construtor de cliente
     public Cliente(String cpf, Boolean preferencial){
         super(cpf);
