@@ -5,6 +5,8 @@ import negocio.entidade.Ticket;
 import negocio.entidade.Vaga;
 import negocio.entidade.Veiculo;
 import negocio.excecao.ticket.TicketNaoExisteException;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class NegocioTicket {
@@ -12,6 +14,7 @@ public class NegocioTicket {
     private IRepositorioTickets repositorioTickets;
     private NegocioVaga negocioVaga; // Depende de outras camadas de negócio
     private NegocioVeiculo negocioVeiculo;
+    private static final double tarifaPorHora = 5.00;
 
     public NegocioTicket(IRepositorioTickets repositorioTickets, NegocioVaga negocioVaga, NegocioVeiculo negocioVeiculo) {
         this.repositorioTickets = repositorioTickets;
@@ -29,15 +32,30 @@ public class NegocioTicket {
         repositorioTickets.adicionar(novoTicket);
     }
 
-    public void registrarSaida(String placa) throws TicketNaoExisteException {
-        // Regra 1: Deve existir um ticket ativo para o veículo.
-        Ticket ticket = repositorioTickets.consultar(placa);
-        if (ticket == null || !ticket.isAtivo()) {
+    public double registrarSaida(Ticket ticket) throws TicketNaoExisteException {
+        if (ticket == null) {
             throw new TicketNaoExisteException();
         }
-        // Regra 2: Calcular o valor a ser pago
-        // (Lógica de cálculo de valor vai aqui)
-        double valorAPagar = 10.0;
-        ticket.registrarSaida(valorAPagar, LocalDateTime.now());
+
+        //Cálculo de valor
+        LocalDateTime entrada = ticket.getHorarioEntrada();
+        LocalDateTime saida = LocalDateTime.now();
+
+        // Calcula a duração em minutos
+        long minutos = Duration.between(entrada, saida).toMinutes();
+
+        double valorAPagar;
+
+        // REGRA 1: Se ficou 60 minutos ou menos, cobra o valor de 1 hora cheia.
+        if (minutos <= 60) {
+            valorAPagar = tarifaPorHora;
+        } else {
+            valorAPagar = (minutos / 60.0) * tarifaPorHora;
+        }
+
+        // Atualiza o ticket com os dados da saída
+        ticket.registrarSaida(valorAPagar, saida);
+
+        return valorAPagar;
     }
 }

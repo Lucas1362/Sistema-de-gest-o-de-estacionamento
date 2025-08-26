@@ -14,7 +14,7 @@ public interface IRepositorioTickets {
 
     ArrayList consultarAtivos();
 
-    void listar();
+    ArrayList listar();
 
     boolean existePlaca(String placa);
 

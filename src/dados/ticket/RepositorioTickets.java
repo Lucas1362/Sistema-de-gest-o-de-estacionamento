@@ -53,7 +53,7 @@ public class RepositorioTickets implements IRepositorioTickets {
     public Ticket consultar(String placa) {
         Ticket ticketProcurado = null;
         for (Ticket ticket : array) {
-            if (ticket.getVeiculo().getPlaca().equals(placa)) {
+            if (ticket.getVeiculo().getPlaca().equals(placa) && ticket.isAtivo()) {
                 ticketProcurado = ticket;
                 break;
             }
@@ -62,10 +62,8 @@ public class RepositorioTickets implements IRepositorioTickets {
     }
 
     @Override
-    public void listar() {
-        for (Ticket ticket : array) {
-            System.out.println(ticket);
-        }
+    public ArrayList<Ticket> listar() {
+        return array;
     }
 
     @Override

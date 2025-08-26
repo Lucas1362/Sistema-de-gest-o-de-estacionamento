@@ -63,7 +63,7 @@ public class RepositorioClientes implements IRepositorioClientes {
     public Cliente consultarPlaca(String placa) {
         Cliente clienteProcurado = null;
         for (Cliente cliente : array) {
-            if (cliente.getVeiculo().getPlaca().equals(placa)) {
+            if (cliente.getVeiculo() != null && cliente.getVeiculo().getPlaca().equals(placa)) {
                 clienteProcurado = cliente;
                 break;
             }
@@ -94,7 +94,7 @@ public class RepositorioClientes implements IRepositorioClientes {
     public boolean existePlaca(String placa) {
         boolean resultado = false;
         for (Cliente cliente : array) {
-            if (cliente.getVeiculo().getPlaca().equals(placa)) {
+            if (cliente.getVeiculo() != null && cliente.getVeiculo().getPlaca().equals(placa)) {
                 resultado = true;
                 break;
             }

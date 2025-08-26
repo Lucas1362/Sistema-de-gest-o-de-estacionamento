@@ -24,8 +24,16 @@ public class Ticket implements Serializable{
         return vaga;
     }
 
+    public double getValor() {
+        return this.valor;
+    }
+
     public Veiculo getVeiculo(){
         return veiculo;
+    }
+
+    public LocalDateTime getHorarioEntrada() {
+        return horarioEntrada;
     }
 
     public boolean isAtivo() {
@@ -37,6 +45,5 @@ public class Ticket implements Serializable{
         this.valor = valor;
         this.horarioSaida = horarioSaida;
         this.ativo = false;
-        this.vaga.setOcupada(false);
     }
 }
