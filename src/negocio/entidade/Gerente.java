@@ -14,8 +14,6 @@ public class Gerente extends Usuario {
      * @param mes 1-12
      * @return String com dados formatados
      */
-
-
     public String gerarRelatorio(int mes) {
         if(mes < 1 || mes > 12) {
             throw new IllegalArgumentException("Mês inválido");
