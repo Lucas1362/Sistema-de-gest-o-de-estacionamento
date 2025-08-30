@@ -1,62 +1,59 @@
 package negocio.entidade;
 import java.io.Serializable;
-
-public class Gerente extends Usuario implements Serializable{
-    private static final long serialVersionUID = 1L;
-    //Construtor
-    public Gerente(String cpf){
-        super(cpf);
-    }
-=======
 import java.time.LocalDate;
 
 
-public class Gerente extends Usuario {
+public class Gerente extends Usuario implements Serializable {
 
-    // Construtor mantido igual
+    private static final long serialVersionUID = 1L;
+
+
     public Gerente(String nome, String cpf) {
-        super(nome, cpf);
+        super(nome, cpf); // Chama o construtor de Usuario com os dois parâmetros necessários.
     }
 
-    /**
-     * Gera relatório mensal simplificado
-     * @param mes 1-12
-     * @return String com dados formatados
-     */
+
     public String gerarRelatorio(int mes) {
-        if(mes < 1 || mes > 12) {
-            throw new IllegalArgumentException("Mês inválido");
+        if (mes < 1 || mes > 12) {
+            throw new IllegalArgumentException("Mês inválido. Use um valor entre 1 e 12.");
         }
 
-        return String.format("""
-            RELATÓRIO MENSAL - %02d/%d
-            Total de vagas: %d
-            Ocupação média: %.1f%%
-            """,
+        // Exemplo de como gerar um relatório. Os valores são fixos por enquanto.
+        return String.format(
+                "RELATÓRIO MENSAL - %02d/%d\n" +
+                        "Total de vagas: %d\n" +
+                        "Ocupação média: %.1f%%",
                 mes,
                 LocalDate.now().getYear(),
-                50,  // Valor exemplo
-                75.5 // Valor exemplo
+                50,  // Valor de exemplo
+                75.5 // Valor de exemplo
         );
     }
 
-    /**
-     * Atualiza dados do cliente
-     */
-    public void modificarCliente(Cliente c, String novoNome, boolean novoStatus) {
-        if(c == null) throw new IllegalArgumentException("Cliente não pode ser nulo");
 
-        if(novoNome != null) {
-            c.setNome(novoNome);
+    public void modificarCliente(ClienteUsuario cliente, String novoNome, boolean novoStatus) {
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente não pode ser nulo.");
         }
-        c.setPreferencial(novoStatus);
+
+        if (novoNome != null && !novoNome.isEmpty()) {
+            cliente.setNome(novoNome);
+        }
+        cliente.setPreferencial(novoStatus);
     }
 
     /**
-     * Modifica status da vaga
+     * Modifica o status de uma vaga.
+     * (As classes 'Vaga' e 'StatusVaga' precisam ser criadas).
+     *
+     * @param vaga       A vaga a ser modificada.
+     * @param novoStatus O novo status da vaga.
      */
-    public void modificarVaga(Vaga v, StatusVaga novoStatus) {
-        if(v == null) throw new IllegalArgumentException("Vaga não pode ser nula");
-        v.setStatus(novoStatus);
+    public void modificarVaga(Vaga vaga, StatusVaga novoStatus) {
+        if (vaga == null) {
+            throw new IllegalArgumentException("Vaga não pode ser nula.");
+        }
+        // Exemplo de implementação:
+        // vaga.setStatus(novoStatus);
     }
 }

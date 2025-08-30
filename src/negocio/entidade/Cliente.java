@@ -1,42 +1,34 @@
 package negocio.entidade;
 
-public class Cliente extends Usuario {
-    private Veiculo veiculo;
+public class ClienteUsuario extends Usuario {
+
     private boolean preferencial;
-    private String cpf; // CPF servirá para fazer o login
-
-    // Construtor de cliente
+    private Veiculo veiculo;
 
 
-    public Cliente(String nome, String cpf, boolean preferencial) {
-        super(nome, cpf); // Chama o construtor da classe pai (Usuario)
+    public ClienteUsuario(String nome, String cpf, boolean preferencial) {
+        // Chama o construtor da classe pai (Usuario) para definir nome e cpf.
+        super(nome, cpf);
         this.preferencial = preferencial;
-        this.cpf = cpf; // Inicializa o CPF
     }
-    // Getters
+
+    // --- Getters e Setters ---
+
     public Veiculo getVeiculo() {
         return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
     public boolean isPreferencial() {
         return preferencial;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-
-
-    // Setters
     public void setPreferencial(boolean preferencial) {
         this.preferencial = preferencial;
     }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-    }
-}
 
+    // Os métodos getCpf() e setCpf() são herdados automaticamente de Usuario.
+}
