@@ -49,4 +49,9 @@ public class NegocioCliente {
         }
     }
 
+    public void alterarStatusPCD(String cpf, boolean novoStatus) throws UsuarioNaoExisteException {
+        Cliente cliente = this.consultarCPF(cpf);
+        cliente.setPreferencial(novoStatus);
+    }
+
 }

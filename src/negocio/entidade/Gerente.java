@@ -35,20 +35,16 @@ public class Gerente extends Usuario implements Serializable{
     /**
      * Atualiza dados do cliente
      */
-    public void modificarCliente(Cliente c, String novoNome, boolean novoStatus) {
+    public void modificarCliente(Cliente c, boolean novoStatus) {
         if(c == null) throw new IllegalArgumentException("Cliente não pode ser nulo");
-
-        if(novoNome != null) {
-            c.setNome(novoNome);
-        }
         c.setPreferencial(novoStatus);
     }
 
     /**
      * Modifica status da vaga
-     */
+
     public void modificarVaga(Vaga v, StatusVaga novoStatus) {
         if(v == null) throw new IllegalArgumentException("Vaga não pode ser nula");
         v.setStatus(novoStatus);
-    }
+    }*/
 }

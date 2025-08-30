@@ -1,4 +1,5 @@
 package negocio.entidade;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 

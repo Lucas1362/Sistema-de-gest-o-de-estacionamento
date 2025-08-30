@@ -1,5 +1,6 @@
 package negocio;
 
+
 import dados.veiculo.IRepositorioVeiculos;
 import negocio.entidade.Veiculo;
 import negocio.excecao.veiculo.VeiculoExistenteException;
@@ -34,4 +35,13 @@ public class NegocioVeiculo {
         }
         return veiculo;
     }
+
+    public void alterarPlaca(String placaAntiga, String placaNova) throws VeiculoNaoExisteException, VeiculoExistenteException {
+        if (repositorio.existePlaca(placaNova)) {
+            throw new VeiculoExistenteException();
+        }
+        Veiculo veiculo = this.consultar(placaAntiga);
+        veiculo.setPlaca(placaNova);
+    }
+
 }

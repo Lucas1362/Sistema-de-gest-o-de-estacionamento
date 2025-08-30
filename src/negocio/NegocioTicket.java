@@ -63,4 +63,8 @@ public class NegocioTicket {
         Ticket novoTicket = new Ticket(veiculo, vaga);
         repositorioTickets.adicionar(novoTicket);
     }
+
+    public IRepositorioTickets getRepositorioTickets() {
+        return this.repositorioTickets;
+    }
 }
