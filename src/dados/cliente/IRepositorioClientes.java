@@ -8,7 +8,7 @@ public interface IRepositorioClientes {
 
     void remover(Cliente cliente);
 
-    Cliente consultar(String placa);
+    Cliente consultarPlaca(String placa);
 
     Cliente consultarCPF(String cpf);
 

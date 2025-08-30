@@ -1,29 +1,19 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Usuario {
-    private String nome;
+public class Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String cpf;
 
-
-    // Construtor para a classe Usuario.
-    public Usuario(String nome, String cpf) { // O nome foi corrigido de "Cliente" para "Usuario"
-        this.nome = nome;
+    public Usuario(String cpf){
         this.cpf = cpf;
     }
 
-    // --- Getters e Setters ---
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
+    public String getCpf(){
         return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+}

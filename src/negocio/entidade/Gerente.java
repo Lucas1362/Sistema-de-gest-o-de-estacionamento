@@ -1,53 +1,62 @@
-// Exemplo de como Veiculo.java precisaria ser ajustado
 package negocio.entidade;
+import java.io.Serializable;
 
-import java.util.Objects; // Importar para usar Objects.hash e Objects.equals
+public class Gerente extends Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
+    //Construtor
+    public Gerente(String cpf){
+        super(cpf);
+    }
+=======
+import java.time.LocalDate;
 
-public class Veiculo {
-    private String placa;
-    private Cliente dono; // Alterado de String para Cliente, se for o caso
 
-    public Veiculo(String placa, Cliente dono) {
-        this.placa = placa;
-        this.dono = dono;
+public class Gerente extends Usuario {
+
+    // Construtor mantido igual
+    public Gerente(String nome, String cpf) {
+        super(nome, cpf);
     }
 
-    // getters
-    public String getPlaca() {
-        return placa;
+    /**
+     * Gera relatório mensal simplificado
+     * @param mes 1-12
+     * @return String com dados formatados
+     */
+    public String gerarRelatorio(int mes) {
+        if(mes < 1 || mes > 12) {
+            throw new IllegalArgumentException("Mês inválido");
+        }
+
+        return String.format("""
+            RELATÓRIO MENSAL - %02d/%d
+            Total de vagas: %d
+            Ocupação média: %.1f%%
+            """,
+                mes,
+                LocalDate.now().getYear(),
+                50,  // Valor exemplo
+                75.5 // Valor exemplo
+        );
     }
 
-    public Cliente getDono() { // Retorna Cliente, não String
-        return dono;
+    /**
+     * Atualiza dados do cliente
+     */
+    public void modificarCliente(Cliente c, String novoNome, boolean novoStatus) {
+        if(c == null) throw new IllegalArgumentException("Cliente não pode ser nulo");
+
+        if(novoNome != null) {
+            c.setNome(novoNome);
+        }
+        c.setPreferencial(novoStatus);
     }
 
-    // setters
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public void setDono(Cliente dono) {
-        this.dono = dono;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Veiculo veiculo = (Veiculo) o;
-        return placa.equalsIgnoreCase(veiculo.placa); // Comparação case-insensitive para placas
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(placa.toLowerCase()); // Hash baseado na placa em minúsculas
-    }
-
-    @Override
-    public String toString() {
-        return "Veiculo{" +
-                "placa='" + placa + '\'' +
-                ", dono=" + (dono != null ? dono.getNome() : "N/A") +
-                '}';
+    /**
+     * Modifica status da vaga
+     */
+    public void modificarVaga(Vaga v, StatusVaga novoStatus) {
+        if(v == null) throw new IllegalArgumentException("Vaga não pode ser nula");
+        v.setStatus(novoStatus);
     }
 }

@@ -1,14 +1,17 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Vaga{
-    private int numeroID;
+public class Vaga implements Serializable{
+    private static final long serialVersionUID = 1L;
+    private String numeroID;
     private boolean ocupada;
+    private boolean PCD;
 
 
 
     //construtor da class
 
-    public Vaga(int numeroID){
+    public Vaga(String numeroID){
         this.numeroID = numeroID;
         this.ocupada = false;
 
@@ -16,12 +19,16 @@ public class Vaga{
 
     //getters
 
-    public int getNumeroID(){
+    public String getNumeroID(){
         return numeroID;
     }
 
     public boolean isOcupada(){
         return ocupada;
+    }
+
+    public boolean isPCD(){
+        return PCD;
     }
 
     //setter
@@ -30,7 +37,9 @@ public class Vaga{
         this.ocupada = ocupada;
     }
 
-    public void setNumeroID(int numeroID){this.numeroID = numeroID;}
+    public void setNumeroID(String numeroID){this.numeroID = numeroID;}
+
+    public void setPCD(boolean PCD){this.PCD = PCD;}
 
 
 }
