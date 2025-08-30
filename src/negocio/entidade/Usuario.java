@@ -16,4 +16,5 @@ public class Usuario implements Serializable{
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
 }

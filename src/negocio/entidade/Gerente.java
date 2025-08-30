@@ -1,21 +1,13 @@
 package negocio.entidade;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Gerente extends Usuario implements Serializable{
     private static final long serialVersionUID = 1L;
-    //Construtor
-    public Gerente(String cpf){
-        super(cpf);
-    }
-=======
-import java.time.LocalDate;
-
-
-public class Gerente extends Usuario {
 
     // Construtor mantido igual
-    public Gerente(String nome, String cpf) {
-        super(nome, cpf);
+    public Gerente(String cpf) {
+        super(cpf);
     }
 
     /**

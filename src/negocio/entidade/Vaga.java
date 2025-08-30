@@ -7,10 +7,7 @@ public class Vaga implements Serializable{
     private boolean ocupada;
     private boolean PCD;
 
-
-
     //construtor da class
-
     public Vaga(String numeroID){
         this.numeroID = numeroID;
         this.ocupada = false;
