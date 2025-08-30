@@ -1,6 +1,7 @@
 package negocio;
 
 import dados.ticket.IRepositorioTickets;
+import negocio.entidade.Cliente;
 import negocio.entidade.Ticket;
 import negocio.entidade.Vaga;
 import negocio.entidade.Veiculo;
@@ -20,16 +21,6 @@ public class NegocioTicket {
         this.repositorioTickets = repositorioTickets;
         this.negocioVaga = negocioVaga;
         this.negocioVeiculo = negocioVeiculo;
-    }
-
-    public void gerarTicketEntrada(String placa, String idVaga) throws Exception {
-        // Regra 1: O veículo deve existir no sistema.
-        Veiculo veiculo = negocioVeiculo.consultar(placa);
-        // Regra 2: A vaga deve existir e estar livre.
-        negocioVaga.ocuparVaga(idVaga);
-        Vaga vaga = negocioVaga.getRepositorio().consultar(idVaga);
-        Ticket novoTicket = new Ticket(veiculo, vaga);
-        repositorioTickets.adicionar(novoTicket);
     }
 
     public double registrarSaida(Ticket ticket) throws TicketNaoExisteException {
@@ -57,5 +48,19 @@ public class NegocioTicket {
         ticket.registrarSaida(valorAPagar, saida);
 
         return valorAPagar;
+    }
+
+    public void gerarTicketEntrada(String placa, String idVaga) throws Exception {
+        Veiculo veiculo = negocioVeiculo.consultar(placa);
+        Cliente cliente = veiculo.getDono();
+        Vaga vaga = negocioVaga.getRepositorio().consultar(idVaga);
+
+        if (vaga.isPCD() && !cliente.isPreferencial()) {
+            throw new Exception("Vaga exclusiva para clientes PCD.");
+        }
+
+        negocioVaga.ocuparVaga(idVaga);
+        Ticket novoTicket = new Ticket(veiculo, vaga);
+        repositorioTickets.adicionar(novoTicket);
     }
 }
