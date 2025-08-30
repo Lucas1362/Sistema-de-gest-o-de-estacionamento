@@ -1,6 +1,8 @@
 package fachada;
 
 import dados.gerente.IRepositorioGerentes;
+import dados.tarifa.IRepositorioTarifa;
+import dados.tarifa.RepositorioTarifa;
 import dados.ticket.IRepositorioTickets;
 import negocio.NegocioCliente;
 import negocio.NegocioVeiculo;
@@ -18,12 +20,14 @@ public class FachadaGerente {
     private NegocioVeiculo negocioVeiculo;
     private IRepositorioGerentes repoGerentes;
     private IRepositorioTickets repoTickets;
+    private RepositorioTarifa repoTarifa;
 
-    public FachadaGerente(NegocioCliente negocioCliente, NegocioVeiculo negocioVeiculo, IRepositorioGerentes repoGerentes, IRepositorioTickets repoTickets) {
+    public FachadaGerente(NegocioCliente negocioCliente, NegocioVeiculo negocioVeiculo, IRepositorioGerentes repoGerentes, IRepositorioTickets repoTickets, RepositorioTarifa repoTarifa) {
         this.negocioCliente = negocioCliente;
         this.negocioVeiculo = negocioVeiculo;
         this.repoGerentes = repoGerentes;
         this.repoTickets = repoTickets;
+        this.repoTarifa = repoTarifa;
     }
 
     // Adicione um gerente inicial se necessário (no Main)
@@ -63,5 +67,9 @@ public class FachadaGerente {
 
     public void alterarPlacaVeiculo(String placaAntiga, String placaNova) throws VeiculoNaoExisteException, VeiculoExistenteException {
         negocioVeiculo.alterarPlaca(placaAntiga, placaNova);
+    }
+
+    public void alterarTarifa(double novoValor) {
+        this.repoTarifa.setNovoValor(novoValor);
     }
 }

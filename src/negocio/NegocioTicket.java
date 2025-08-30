@@ -1,5 +1,6 @@
 package negocio;
 
+import dados.tarifa.IRepositorioTarifa;
 import dados.ticket.IRepositorioTickets;
 import negocio.entidade.Cliente;
 import negocio.entidade.Ticket;
@@ -15,12 +16,13 @@ public class NegocioTicket {
     private IRepositorioTickets repositorioTickets;
     private NegocioVaga negocioVaga; // Depende de outras camadas de negócio
     private NegocioVeiculo negocioVeiculo;
-    private static final double tarifaPorHora = 5.00;
+    private IRepositorioTarifa repoTarifa;
 
     public NegocioTicket(IRepositorioTickets repositorioTickets, NegocioVaga negocioVaga, NegocioVeiculo negocioVeiculo) {
         this.repositorioTickets = repositorioTickets;
         this.negocioVaga = negocioVaga;
         this.negocioVeiculo = negocioVeiculo;
+        this.repoTarifa = repoTarifa;
     }
 
     public double registrarSaida(Ticket ticket) throws TicketNaoExisteException {
@@ -39,9 +41,9 @@ public class NegocioTicket {
 
         // REGRA 1: Se ficou 60 minutos ou menos, cobra o valor de 1 hora cheia.
         if (minutos <= 60) {
-            valorAPagar = tarifaPorHora;
+            valorAPagar = repoTarifa.getValorAtual();
         } else {
-            valorAPagar = (minutos / 60.0) * tarifaPorHora;
+            valorAPagar = (minutos / 60.0) * repoTarifa.getValorAtual();;
         }
 
         // Atualiza o ticket com os dados da saída

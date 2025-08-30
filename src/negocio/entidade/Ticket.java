@@ -37,6 +37,10 @@ public class Ticket implements Serializable{
         return horarioEntrada;
     }
 
+    public LocalDateTime getHorarioSaida(){
+        return horarioSaida;
+    }
+
     public boolean isAtivo() {
         return ativo;
     }
