@@ -1,7 +1,9 @@
 package negocio.entidade;
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class Ticket{
+public class Ticket implements Serializable{
+    private static final long serialVersionUID = 1L;
     private LocalDateTime horarioEntrada; //Horário de criação do ticket
     private LocalDateTime horarioSaida; //Horário em que o cliente começa o processo de saída
     private boolean ativo;
@@ -22,8 +24,16 @@ public class Ticket{
         return vaga;
     }
 
-    public Cliente getVeiculo(){
+    public double getValor() {
+        return this.valor;
+    }
+
+    public Veiculo getVeiculo(){
         return veiculo;
+    }
+
+    public LocalDateTime getHorarioEntrada() {
+        return horarioEntrada;
     }
 
     public boolean isAtivo() {
@@ -35,6 +45,5 @@ public class Ticket{
         this.valor = valor;
         this.horarioSaida = horarioSaida;
         this.ativo = false;
-        this.vaga.setOcupada(false);
     }
 }

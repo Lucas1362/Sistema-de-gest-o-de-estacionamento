@@ -1,23 +1,16 @@
 package negocio.entidade;
+import java.io.Serializable;
 
-public class Usuario{
-    private String nome;
+public class Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String cpf;
 
-    public Cliente(String nome, String cpf){
-        this.nome = nome;
+    public Usuario(String cpf){
         this.cpf = cpf;
     }
 
-    public String getNome(){
-        return nome;
-    }
     public String getCpf(){
         return cpf;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public void setCpf(String cpf) {

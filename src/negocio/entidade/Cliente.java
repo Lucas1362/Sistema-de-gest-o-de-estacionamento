@@ -1,9 +1,22 @@
 package negocio.entidade;
+import java.io.Serializable;
 
+
+public class Cliente extends Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
+    private Veiculo veiculo;
+    private boolean preferencial;
+    // Construtor de cliente
+    public Cliente(String cpf, Boolean preferencial){
+        super(cpf);
+        this.preferencial = preferencial;
+    }
+=======
 public class Cliente extends Usuario {
     private Veiculo veiculo;
     private boolean preferencial;
     private String cpf; // CPF servirá para fazer o login
+
 
     // Construtor de cliente
 
@@ -22,9 +35,13 @@ public class Cliente extends Usuario {
         return preferencial;
     }
 
+
+    //setters
+=======
     public String getCpf() {
         return cpf;
     }
+
 
 
 
@@ -32,11 +49,17 @@ public class Cliente extends Usuario {
     public void setPreferencial(boolean preferencial) {
         this.preferencial = preferencial;
     }
+
+
+    public void setVeiculo(Veiculo carro){
+        this.veiculo = carro;
+=======
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
+
     }
 }
 
