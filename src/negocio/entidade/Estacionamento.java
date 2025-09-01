@@ -1,9 +1,5 @@
 package negocio.entidade;
 
-/**
- * Representa uma Vaga de estacionamento.
- * Agora a Vaga tem um status para indicar se está livre ou ocupada.
- */
 public class Vaga {
 
     private String id; // Ex: A-10, B-12
