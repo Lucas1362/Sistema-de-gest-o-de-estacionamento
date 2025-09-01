@@ -4,6 +4,8 @@ import dados.cliente.IRepositorioClientes;
 import negocio.entidade.Cliente;
 import negocio.excecao.usuario.UsuarioExistenteException;
 import negocio.excecao.usuario.UsuarioNaoExisteException;
+import negocio.excecao.cpf.CpfApenasNumerosException;
+import negocio.excecao.cpf.CpfTamanhoException;
 
 public class NegocioCliente {
 
@@ -13,8 +15,17 @@ public class NegocioCliente {
         this.repositorio = repositorio;
     }
 
-    public void adicionar(Cliente cliente) throws UsuarioExistenteException {
-        boolean existe = repositorio.existeCPF(cliente.getCpf());
+    public void adicionar(Cliente cliente) throws UsuarioExistenteException, CpfTamanhoException, CpfApenasNumerosException {
+        String cpf = cliente.getCpf();
+        // REGRA 1: Verifica se o CPF contém apenas números.
+        if (!cpf.matches("[0-9]+")) {
+            throw new CpfApenasNumerosException();
+        }
+        // REGRA 2: Verifica se o CPF tem exatamente 11 dígitos.
+        if (cpf.length() != 11) {
+            throw new CpfTamanhoException();
+        }
+        boolean existe = repositorio.existeCPF(cpf);
         if (existe) {
             throw new UsuarioExistenteException();
         } else {
