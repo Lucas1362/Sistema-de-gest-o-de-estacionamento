@@ -4,7 +4,7 @@ public class Usuario{
     private String nome;
     private String cpf;
 
-    public Cliente(String nome, String cpf){
+    public Usuario(String nome, String cpf){ //  CORRIGIDO
         this.nome = nome;
         this.cpf = cpf;
     }
