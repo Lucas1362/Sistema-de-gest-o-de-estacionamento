@@ -128,7 +128,6 @@ public class InterfaceConsole {
             if (idVaga.equalsIgnoreCase("cancelar")) { return; }
 
             try {
-                // --- MUDANÇA AQUI: RESUMO DE ENTRADA ---
                 System.out.println("\n--- CONFIRME OS DADOS DA ENTRADA ---");
                 System.out.println("Placa do Veículo: " + placa);
                 System.out.println("Vaga Escolhida: " + idVaga);
@@ -154,7 +153,6 @@ public class InterfaceConsole {
         System.out.println("\n>>> Login bem-sucedido. Iniciando processo de SAÍDA.");
         double valor = fachadaCliente.registrarSaida(ticketAtivo);
 
-        // --- MUDANÇA AQUI: RESUMO DE SAÍDA ---
         LocalDateTime entrada = ticketAtivo.getHorarioEntrada();
         LocalDateTime saida = ticketAtivo.getHorarioSaida(); // Adicione este getter em Ticket.java
         long minutos = Duration.between(entrada, saida).toMinutes();
@@ -171,8 +169,6 @@ public class InterfaceConsole {
         if (scanner.nextLine().equalsIgnoreCase("pagar")) {
             System.out.println("\n>>> PAGAMENTO CONFIRMADO. SAÍDA LIBERADA! Volte sempre!");
         } else {
-            // Aqui você precisaria de uma lógica para "desfazer" a saída ou o ticket permaneceria inativo.
-            // Por simplicidade, vamos apenas avisar.
             System.out.println("\nPagamento não confirmado. A saída não foi liberada.");
         }
     }
@@ -192,19 +188,30 @@ public class InterfaceConsole {
             System.out.println("1. Gerar Relatório Financeiro");
             System.out.println("2. Alterar Status PCD de Cliente");
             System.out.println("3. Alterar Placa de Veículo");
-            System.out.println("4. Alterar Tarifa por Hora"); // --- NOVA OPÇÃO ---
-            System.out.println("5. Voltar ao Menu Principal");
+            System.out.println("4. Alterar Tarifa por Hora");
+            System.out.println("5. Gerenciar Vagas");
+            System.out.println("6. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
 
             int escolha = lerInteiro();
             switch (escolha) {
-                // ...
+                case 1:
+                    System.out.println(fachadaGerente.gerarRelatorioFinanceiro());
+                    break;
+                case 2:
+                    alterarPCD();
+                    break;
+                case 3:
+                    alterarPlaca();
+                    break;
                 case 4:
                     alterarTarifa();
                     break;
                 case 5:
+                    gerenciarVagas();
+                    break;
+                case 6:
                     return;
-                // ...
             }
         }
     }
@@ -251,6 +258,60 @@ public class InterfaceConsole {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             return -1;
+        }
+    }
+
+    private void gerenciarVagas() {
+        while (true) {
+            System.out.println("\n--- GERENCIAR VAGAS ---");
+            System.out.println("1. Adicionar Vaga");
+            System.out.println("2. Remover Vaga");
+            System.out.println("3. Listar Todas as Vagas");
+            System.out.println("4. Voltar");
+            System.out.print("Escolha uma opção: ");
+
+            int escolha = lerInteiro();
+            switch (escolha) {
+                case 1 -> adicionarVaga();
+                case 2 -> removerVaga();
+                case 3 -> listarVagas();
+                case 4 -> { return; }
+                default -> System.out.println("Opção inválida.");
+            }
+        }
+    }
+
+    private void adicionarVaga() {
+        try {
+            System.out.print("Digite o ID da nova vaga (ex: C01): ");
+            String id = scanner.nextLine();
+            System.out.print("É uma vaga PCD? (s/n): ");
+            boolean pcd = scanner.nextLine().equalsIgnoreCase("s");
+            fachadaGerente.adicionarVaga(id, pcd);
+            System.out.println("Vaga adicionada com sucesso!");
+        } catch (Exception e) {
+            System.err.println("ERRO: " + e.getMessage());
+        }
+    }
+
+    private void removerVaga() {
+        try {
+            System.out.print("Digite o ID da vaga a ser removida: ");
+            String id = scanner.nextLine();
+            fachadaGerente.removerVaga(id);
+            System.out.println("Vaga removida com sucesso!");
+        } catch (Exception e) {
+            System.err.println("ERRO: " + e.getMessage());
+        }
+    }
+
+    private void listarVagas() {
+        ArrayList<Vaga> vagas = fachadaGerente.listarTodasAsVagas();
+        System.out.println("\n--- LISTA DE TODAS AS VAGAS ---");
+        for (Vaga vaga : vagas) {
+            String status = vaga.isOcupada() ? "Ocupada" : "Livre";
+            String pcd = vaga.isPCD() ? " (PCD)" : "";
+            System.out.printf("Vaga: %s | Status: %s%s\n", vaga.getNumeroID(), status, pcd);
         }
     }
 }

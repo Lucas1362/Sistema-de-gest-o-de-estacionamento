@@ -24,10 +24,10 @@ public class Main {
         NegocioCliente negocioCliente = new NegocioCliente(repoClientes);
         NegocioVeiculo negocioVeiculo = new NegocioVeiculo(repoVeiculos);
         NegocioVaga negocioVaga = new NegocioVaga(repoVagas);
-        NegocioTicket negocioTicket = new NegocioTicket(repoTickets, negocioVaga, negocioVeiculo);
+        NegocioTicket negocioTicket = new NegocioTicket(repoTickets, negocioVaga, negocioVeiculo, repoTarifa);
 
         FachadaCliente fachadaCliente = new FachadaCliente(negocioCliente, negocioVeiculo, negocioVaga, negocioTicket);
-        FachadaGerente fachadaGerente = new FachadaGerente(negocioCliente, negocioVeiculo, repoGerentes, repoTickets, repoTarifa);
+        FachadaGerente fachadaGerente = new FachadaGerente(negocioCliente, negocioVeiculo, repoGerentes, repoTickets, repoTarifa, negocioVaga);
 
         inicializarDados(repoVagas, fachadaGerente);
 

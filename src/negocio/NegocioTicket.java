@@ -1,6 +1,7 @@
 package negocio;
 
 import dados.tarifa.IRepositorioTarifa;
+import dados.tarifa.RepositorioTarifa;
 import dados.ticket.IRepositorioTickets;
 import negocio.entidade.Cliente;
 import negocio.entidade.Ticket;
@@ -16,9 +17,9 @@ public class NegocioTicket {
     private IRepositorioTickets repositorioTickets;
     private NegocioVaga negocioVaga; // Depende de outras camadas de negócio
     private NegocioVeiculo negocioVeiculo;
-    private IRepositorioTarifa repoTarifa;
+    private RepositorioTarifa repoTarifa;
 
-    public NegocioTicket(IRepositorioTickets repositorioTickets, NegocioVaga negocioVaga, NegocioVeiculo negocioVeiculo) {
+    public NegocioTicket(IRepositorioTickets repositorioTickets, NegocioVaga negocioVaga, NegocioVeiculo negocioVeiculo, RepositorioTarifa repoTarifa) {
         this.repositorioTickets = repositorioTickets;
         this.negocioVaga = negocioVaga;
         this.negocioVeiculo = negocioVeiculo;
