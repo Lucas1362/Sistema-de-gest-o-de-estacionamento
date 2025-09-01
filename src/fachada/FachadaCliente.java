@@ -38,7 +38,7 @@ public class FachadaCliente {
         if (!veiculo.getDono().getCpf().equals(cliente.getCpf())) {
             throw new VeiculoNaoPertenceAoClienteException(placa, cpf);
         }
-        return negocioTicket.getRepositorioTickets().consultar(placa); // 'consultar' já busca apenas tickets ativos
+        return negocioTicket.getRepositorioTickets().consultar(placa);
     }
 
     public ArrayList<Vaga> listarVagasLivres() {
@@ -51,7 +51,7 @@ public class FachadaCliente {
 
     public double registrarSaida(Ticket ticket) throws Exception {
         double valorPago = negocioTicket.registrarSaida(ticket);
-        ticket.getVaga().setOcupada(false); // A fachada orquestra a liberação da vaga
+        ticket.getVaga().setOcupada(false);
         return valorPago;
     }
 }

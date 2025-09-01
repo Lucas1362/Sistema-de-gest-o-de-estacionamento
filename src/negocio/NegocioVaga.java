@@ -29,7 +29,7 @@ public class NegocioVaga {
 
 
     public ArrayList<Vaga> consultarVagasLivres() {
-        // Esta é uma regra de negócio importante: filtrar apenas as vagas livres.
+        // Esta é uma regra de negócio importante para o funcionamento: filtrar apenas as vagas livres.
         ArrayList<Vaga> vagasLivres = new ArrayList<>();
         ArrayList<Vaga> todasAsVagas = repositorio.listar();
 
