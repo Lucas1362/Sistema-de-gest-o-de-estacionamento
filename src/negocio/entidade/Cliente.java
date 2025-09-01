@@ -30,5 +30,5 @@ public class ClienteUsuario extends Usuario {
         this.preferencial = preferencial;
     }
 
-    // Os métodos getCpf() e setCpf() são herdados automaticamente de Usuario.
+    // Os métodos getCpf(), setCpf(), getNome() e setNome() são herdados automaticamente de Usuario.
 }

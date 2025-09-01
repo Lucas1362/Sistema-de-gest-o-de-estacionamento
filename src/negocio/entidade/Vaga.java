@@ -1,45 +1,49 @@
 package negocio.entidade;
-import java.io.Serializable;
 
-public class Vaga implements Serializable{
-    private static final long serialVersionUID = 1L;
-    private String numeroID;
-    private boolean ocupada;
-    private boolean PCD;
+/**
+ * Representa uma Vaga de estacionamento.
+ * Agora a Vaga tem um status para indicar se está livre ou ocupada.
+ */
+public class Vaga {
 
+    private String id; // Ex: A-10, B-12
+    private StatusVaga status;
 
-
-    //construtor da class
-
-    public Vaga(String numeroID){
-        this.numeroID = numeroID;
-        this.ocupada = false;
-
+    public Vaga(String id) {
+        this.id = id;
+        this.status = StatusVaga.LIVRE; // Toda nova vaga começa livre.
     }
 
-    //getters
-
-    public String getNumeroID(){
-        return numeroID;
+    // --- Getters ---
+    public String getId() {
+        return id;
     }
 
-    public boolean isOcupada(){
-        return ocupada;
+    public StatusVaga getStatus() {
+        return status;
     }
 
-    public boolean isPCD(){
-        return PCD;
+    // --- Métodos de Negócio ---
+
+    /**
+     * Ocupa a vaga, mudando seu status para OCUPADA.
+     */
+    public void ocupar() {
+        this.status = StatusVaga.OCUPADA;
     }
 
-    //setter
-
-    public void setOcupada(boolean ocupada){
-        this.ocupada = ocupada;
+    /**
+     * Libera a vaga, mudando seu status para LIVRE.
+     */
+    public void liberar() {
+        this.status = StatusVaga.LIVRE;
     }
 
-    public void setNumeroID(String numeroID){this.numeroID = numeroID;}
-
-    public void setPCD(boolean PCD){this.PCD = PCD;}
-
-
+    /**
+     * Verifica se a vaga está livre.
+     * @return true se o status for LIVRE, false caso contrário.
+     */
+    public boolean isLivre() {
+        return this.status == StatusVaga.LIVRE;
+    }
 }

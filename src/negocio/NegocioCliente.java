@@ -1,7 +1,7 @@
 package negocio;
 
 import dados.cliente.IRepositorioClientes;
-import negocio.entidade.Cliente;
+import negocio.entidade.ClienteUsuario; // <--- MUDANÇA
 import negocio.excecao.usuario.UsuarioExistenteException;
 import negocio.excecao.usuario.UsuarioNaoExisteException;
 
@@ -13,7 +13,7 @@ public class NegocioCliente {
         this.repositorio = repositorio;
     }
 
-    public void adicionar(Cliente cliente) throws UsuarioExistenteException {
+    public void adicionar(ClienteUsuario cliente) throws UsuarioExistenteException { // <--- MUDANÇA
         boolean existe = repositorio.existeCPF(cliente.getCpf());
         if (existe) {
             throw new UsuarioExistenteException();
@@ -23,7 +23,7 @@ public class NegocioCliente {
     }
 
     public void remover(String cpf) throws UsuarioNaoExisteException {
-        Cliente cliente = repositorio.consultarCPF(cpf);
+        ClienteUsuario cliente = repositorio.consultarCPF(cpf); // <--- MUDANÇA
         if (cliente != null) {
             repositorio.remover(cliente);
         } else {
@@ -31,8 +31,8 @@ public class NegocioCliente {
         }
     }
 
-    public Cliente consultarCPF(String cpf) throws UsuarioNaoExisteException {
-        Cliente cliente = repositorio.consultarCPF(cpf);
+    public ClienteUsuario consultarCPF(String cpf) throws UsuarioNaoExisteException { // <--- MUDANÇA
+        ClienteUsuario cliente = repositorio.consultarCPF(cpf); // <--- MUDANÇA
         if (cliente == null) {
             throw new UsuarioNaoExisteException();
         } else {
@@ -40,13 +40,12 @@ public class NegocioCliente {
         }
     }
 
-    public Cliente consultarPlaca(String placa) throws UsuarioNaoExisteException {
-        Cliente cliente = repositorio.consultarPlaca(placa);
+    public ClienteUsuario consultarPlaca(String placa) throws UsuarioNaoExisteException { // <--- MUDANÇA
+        ClienteUsuario cliente = repositorio.consultarPlaca(placa); // <--- MUDANÇA
         if (cliente == null) {
             throw new UsuarioNaoExisteException();
         } else {
             return cliente;
         }
     }
-
 }

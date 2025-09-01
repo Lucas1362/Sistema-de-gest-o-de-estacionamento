@@ -1,49 +1,61 @@
 package negocio.entidade;
 import java.time.LocalDateTime;
-import java.io.Serializable;
 
-public class Ticket implements Serializable{
-    private static final long serialVersionUID = 1L;
-    private LocalDateTime horarioEntrada; //Horário de criação do ticket
-    private LocalDateTime horarioSaida; //Horário em que o cliente começa o processo de saída
+public class Ticket {
+    private LocalDateTime horarioEntrada;
+    private LocalDateTime horarioSaida;
     private boolean ativo;
     private double valor;
     private Vaga vaga;
     private Veiculo veiculo;
 
-    //Construtor de Ticket
-    public Ticket(Veiculo veiculo, Vaga vaga){
+    public Ticket(Veiculo veiculo, Vaga vaga) {
         this.veiculo = veiculo;
         this.vaga = vaga;
         this.horarioEntrada = LocalDateTime.now();
         this.ativo = true;
+
     }
 
-    //getters
-    public Vaga getVaga(){
+    // --- Getters ---
+
+    public Vaga getVaga() {
         return vaga;
     }
 
-    public double getValor() {
-        return this.valor;
-    }
-
-    public Veiculo getVeiculo(){
+    public Veiculo getVeiculo() {
         return veiculo;
-    }
-
-    public LocalDateTime getHorarioEntrada() {
-        return horarioEntrada;
     }
 
     public boolean isAtivo() {
         return ativo;
     }
 
-    //Registra a saída, recebe o valor final da permanencia e muda os valores
-    public void registrarSaida(double valor, LocalDateTime horarioSaida){
+    // GETTERS ADICIONADOS CONFORME SUA SUGESTÃO
+    public LocalDateTime getHorarioEntrada() {
+        return horarioEntrada;
+    }
+
+    public LocalDateTime getHorarioSaida() {
+        return horarioSaida;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+
+    /**
+     * Finaliza o ticket, registra o valor, o horário de saída
+     * e libera a vaga associada.
+     * @param valor O valor final a ser pago.
+     * @param horarioSaida O momento exato da saída.
+     */
+    public void registrarSaida(double valor, LocalDateTime horarioSaida) {
         this.valor = valor;
         this.horarioSaida = horarioSaida;
         this.ativo = false;
+        // CORREÇÃO APLICADA CONFORME SUA SUGESTÃO
+        this.vaga.liberar();
     }
 }

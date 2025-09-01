@@ -1,53 +1,45 @@
 package negocio.entidade;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+public class Vaga {
 
+    private String id; // Ex: A-10, B-12
+    private StatusVaga status;
 
-public class Estacionamento {
-
-    private List<Vaga> vagas;
-    private List<Ticket> ticketsAtivos;
-
-    /**
-     * Construtor do Estacionamento.
-     * Inicializa as listas de vagas e tickets como listas vazias e seguras para concorrência.
-     */
-    public Estacionamento() {
-        this.vagas = new ArrayList<>();
-        this.ticketsAtivos = new ArrayList<>();
-        // Futuramente, poderíamos inicializar o estacionamento com um número fixo de vagas.
-    }
-
-    // --- Métodos de Gerenciamento ---
-
-
-    public void adicionarVaga(Vaga vaga) {
-        this.vagas.add(vaga);
-    }
-
-
-    public void adicionarTicket(Ticket ticket) {
-        this.ticketsAtivos.add(ticket);
+    public Vaga(String id) {
+        this.id = id;
+        this.status = StatusVaga.LIVRE; // Toda nova vaga começa livre.
     }
 
     // --- Getters ---
+    public String getId() {
+        return id;
+    }
+
+    public StatusVaga getStatus() {
+        return status;
+    }
+
+    // --- Métodos de Negócio ---
 
     /**
-     * Retorna uma visão não modificável da lista de vagas.
-     * Isso protege a lista original de modificações externas.
-     * @return A lista de vagas.
+     * Ocupa a vaga, mudando seu status para OCUPADA.
      */
-    public List<Vaga> getVagas() {
-        return Collections.unmodifiableList(vagas);
+    public void ocupar() {
+        this.status = StatusVaga.OCUPADA;
     }
 
     /**
-     * Retorna uma visão não modificável da lista de tickets ativos.
-     * @return A lista de tickets ativos.
+     * Libera a vaga, mudando seu status para LIVRE.
      */
-    public List<Ticket> getTicketsAtivos() {
-        return Collections.unmodifiableList(ticketsAtivos);
+    public void liberar() {
+        this.status = StatusVaga.LIVRE;
+    }
+
+    /**
+     * Verifica se a vaga está livre.
+     * @return true se o status for LIVRE, false caso contrário.
+     */
+    public boolean isLivre() {
+        return this.status == StatusVaga.LIVRE;
     }
 }

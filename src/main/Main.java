@@ -1,9 +1,12 @@
+package main;
 import dados.cliente.RepositorioClientes;
 import dados.ticket.RepositorioTickets;
 import dados.vaga.RepositorioVagas;
 import dados.veiculo.RepositorioVeiculos;
 import negocio.*;
 import negocio.entidade.*;
+import negocio.entidade.ClienteUsuario; // <--- MUDANÇA
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -87,14 +90,18 @@ public class Main {
             System.out.print("Você é PCD? (s/n): ");
             boolean pcd = scanner.nextLine().equalsIgnoreCase("s");
 
-            // Interação direta com as camadas de negócio
-            Cliente novoCliente = new Cliente(cpf, pcd);
+            // --- MUDANÇA SOLICITADA ---
+            // Adicionado "Nome Padrão" para o construtor de ClienteUsuario
+            ClienteUsuario novoCliente = new ClienteUsuario("Nome Padrão", cpf, pcd);
             negocioCliente.adicionar(novoCliente);
 
+            // A classe Veiculo agora espera um ClienteUsuario no construtor
             Veiculo novoVeiculo = new Veiculo(placa, novoCliente);
             negocioVeiculo.adicionar(novoVeiculo);
 
-            novoCliente.setVeiculo(novoVeiculo); // Associa o veículo ao cliente
+            // A associação é feita no construtor de Veiculo, esta linha pode ser opcional
+            // dependendo da sua implementação, mas vamos garantir que a referência está correta.
+            novoCliente.setVeiculo(novoVeiculo);
 
             System.out.println("\n>>> Cadastro realizado com sucesso! Faça o login para continuar.");
 
@@ -112,8 +119,10 @@ public class Main {
             String placa = scanner.nextLine();
 
             // Lógica do Login Inteligente
-            Cliente cliente = negocioCliente.consultarCPF(cpf);
+            ClienteUsuario cliente = negocioCliente.consultarCPF(cpf); // <--- MUDANÇA
             Veiculo veiculo = negocioVeiculo.consultar(placa);
+
+            // Assumindo que a classe Veiculo foi atualizada para ter um Dono do tipo ClienteUsuario
             if (!veiculo.getDono().getCpf().equals(cliente.getCpf())) {
                 throw new Exception("Esta placa não pertence ao CPF informado.");
             }
@@ -146,7 +155,7 @@ public class Main {
                 System.out.println("\n>>> Login bem-sucedido. Ticket ativo encontrado. Iniciando processo de SAÍDA.");
                 double valor = negocioTicket.registrarSaida(ticketAtivo);
 
-                // Libera a vaga manualmente (orquestração que a Fachada faria)
+                // Libera a vaga manualmente
                 ticketAtivo.getVaga().setOcupada(false);
 
                 System.out.printf("\n--- RECIBO DE PAGAMENTO ---\n");
@@ -175,14 +184,14 @@ public class Main {
         int escolha = lerInteiro();
 
         if (escolha == 1) {
-            // Lógica do Relatório (interação direta com repositório)
+            // Lógica do Relatório
             double faturamentoTotal = 0;
             int ticketsFinalizados = 0;
             ArrayList<Ticket> todosOsTickets = repoTickets.listar();
 
             for (Ticket t : todosOsTickets) {
                 if (!t.isAtivo()) {
-                    faturamentoTotal += t.getValor(); // Adicione getter getValor() ao Ticket
+                    faturamentoTotal += t.getValor();
                     ticketsFinalizados++;
                 }
             }
