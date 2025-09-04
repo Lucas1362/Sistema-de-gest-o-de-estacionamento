@@ -1,36 +1,49 @@
 package negocio.entidade;
 
-public class Vaga{
-    private int numeroID;
-    private boolean ocupada;
+/**
+ * Representa uma Vaga de estacionamento.
+ * Agora a Vaga tem um status para indicar se está livre ou ocupada.
+ */
+public class Vaga {
 
+    private String id; // Ex: A-10, B-12
+    private StatusVaga status;
 
-
-    //construtor da class
-
-    public Vaga(int numeroID){
-        this.numeroID = numeroID;
-        this.ocupada = false;
-
+    public Vaga(String id) {
+        this.id = id;
+        this.status = StatusVaga.LIVRE; // Toda nova vaga começa livre.
     }
 
-    //getters
-
-    public int getNumeroID(){
-        return numeroID;
+    // --- Getters ---
+    public String getId() {
+        return id;
     }
 
-    public boolean isOcupada(){
-        return ocupada;
+    public StatusVaga getStatus() {
+        return status;
     }
 
-    //setter
+    // --- Métodos de Negócio ---
 
-    public void setOcupada(boolean ocupada){
-        this.ocupada = ocupada;
+    /**
+     * Ocupa a vaga, mudando seu status para OCUPADA.
+     */
+    public void ocupar() {
+        this.status = StatusVaga.OCUPADA;
     }
 
-    public void setNumeroID(int numeroID){this.numeroID = numeroID;}
+    /**
+     * Libera a vaga, mudando seu status para LIVRE.
+     */
+    public void liberar() {
+        this.status = StatusVaga.LIVRE;
+    }
 
-
+    /**
+     * Verifica se a vaga está livre.
+     * @return true se o status for LIVRE, false caso contrário.
+     */
+    public boolean isLivre() {
+        return this.status == StatusVaga.LIVRE;
+    }
 }
